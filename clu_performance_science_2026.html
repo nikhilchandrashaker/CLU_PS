@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CLU Performance Science 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0e0b1a;color:#e8e4f0;min-height:100vh}
+.header{background:linear-gradient(135deg,#3B2360,#1a0f33);padding:2rem 2.5rem 1.5rem;border-bottom:2px solid #C8A951}
+.header h1{font-size:1.6rem;font-weight:700;color:#fff;letter-spacing:.5px}
+.header p{color:#b8a8d0;font-size:.85rem;margin-top:.3rem}
+.badge{display:inline-block;background:#C8A951;color:#1a0f33;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-right:6px;letter-spacing:.5px}
+nav{display:flex;gap:2px;padding:.75rem 2.5rem;background:#150d2b;border-bottom:1px solid #2a1f45}
+nav button{background:none;border:none;color:#9a8ab8;font-size:.82rem;padding:.45rem 1rem;border-radius:6px;cursor:pointer;transition:.15s}
+nav button.active,nav button:hover{background:#3B2360;color:#fff}
+.section{display:none;padding:1.5rem 2.5rem 2rem}
+.section.active{display:block}
+.section-title{font-size:1rem;font-weight:600;color:#C8A951;text-transform:uppercase;letter-spacing:1px;margin-bottom:1.25rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+.card{background:#1a1030;border:1px solid #2a1f45;border-radius:10px;padding:1.1rem 1.25rem}
+.card h3{font-size:.8rem;color:#9a8ab8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem}
+.stat-big{font-size:1.7rem;font-weight:700;color:#fff}
+.stat-sub{font-size:.75rem;color:#7a6a98;margin-top:.1rem}
+.table-wrap{overflow-x:auto;margin-top:.5rem}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+th{background:#2a1f45;color:#C8A951;font-weight:600;padding:.5rem .75rem;text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.5px}
+td{padding:.45rem .75rem;border-bottom:1px solid #1f1535;color:#d0c8e8}
+tr:hover td{background:#1f1535}
+.bar-wrap{margin:.6rem 0}
+.bar-label{display:flex;justify-content:space-between;font-size:.75rem;color:#9a8ab8;margin-bottom:3px}
+.bar-bg{background:#1f1535;border-radius:4px;height:8px;overflow:hidden}
+.bar-fill{height:8px;border-radius:4px;transition:width .6s}
+.bar-purple{background:#7B5EA7}
+.bar-gold{background:#C8A951}
+.bar-teal{background:#2dc4a2}
+.chart-wrap{position:relative;width:100%;height:260px}
+.chart-wrap-tall{position:relative;width:100%;height:340px}
+.tag{display:inline-block;font-size:.7rem;padding:2px 8px;border-radius:20px;font-weight:600}
+.tag-bb{background:#3B2360;color:#b89de8}
+.tag-sb{background:#1a2f20;color:#6fcf97}
+.legend{display:flex;gap:16px;font-size:.75rem;color:#9a8ab8;margin-bottom:.75rem;flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend-dot{width:10px;height:10px;border-radius:2px}
+.hr{border:none;border-top:1px solid #2a1f45;margin:1.25rem 0}
+.note{font-size:.72rem;color:#6a5a88;margin-top:.75rem;font-style:italic}
+.acwr-zone{display:flex;align-items:center;gap:8px;font-size:.75rem;padding:.35rem .75rem;border-radius:6px;margin-bottom:.4rem}
+.zone-safe{background:#0d2118;color:#6fcf97;border:1px solid #1a4030}
+.zone-caution{background:#2a1f08;color:#f2c94c;border:1px solid #4a3a10}
+.zone-danger{background:#2a0808;color:#eb5757;border:1px solid #4a1010}
+.player-card{background:#150d2b;border:1px solid #2a1f45;border-radius:8px;padding:.9rem 1rem;margin-bottom:.6rem}
+.player-card .name{font-weight:600;font-size:.88rem;color:#e8e4f0}
+.player-card .pos{font-size:.72rem;color:#9a8ab8;margin-bottom:.5rem}
+</style>
+</head>
+<body>
+<div class="header">
+  <div><span class="badge">⚾ BASEBALL</span><span class="badge" style="background:#2dc4a2;color:#0a1f18">🥎 SOFTBALL</span></div>
+  <h1>Cal Lutheran University — Performance Science 2026</h1>
+  <p>Kingsmen Baseball &nbsp;·&nbsp; Regals Softball &nbsp;·&nbsp; Physical, Physiological &amp; Biomechanical Analysis</p>
+</div>
+<nav>
+  <button class="active" onclick="show('hitting',this)">Hitting</button>
+  <button onclick="show('pitching',this)">Pitching</button>
+  <button onclick="show('monitoring',this)">Athlete Monitoring</button>
+  <button onclick="show('clustering',this)">Archetypes</button>
+  <button onclick="show('about',this)">About</button>
+</nav>
+
+<div id="hitting" class="section active">
+  <div class="section-title">Advanced Hitting Metrics — Spring 2026</div>
+  <div class="grid3" style="margin-bottom:1rem">
+    <div class="card"><h3>Team wOBA — Baseball</h3><div class="stat-big">.357</div><div class="stat-sub">Weighted on-base average</div></div>
+    <div class="card"><h3>Top Exit Velo</h3><div class="stat-big">98.3<span style="font-size:1rem;color:#9a8ab8"> mph</span></div><div class="stat-sub">Marcus Reyes · Baseball</div></div>
+    <div class="card"><h3>Top wOBA — Softball</h3><div class="stat-big">.440</div><div class="stat-sub">Reyna Perez · Regals</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="color:#C8A951;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem">⚾ Kingsmen — Exit Velo vs wOBA</h3>
+      <div class="chart-wrap"><canvas id="evBB" role="img" aria-label="Scatter chart of exit velocity vs wOBA for Cal Lutheran baseball players"></canvas></div>
+    </div>
+    <div class="card">
+      <h3 style="color:#2dc4a2;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem">🥎 Regals — Exit Velo vs wOBA</h3>
+      <div class="chart-wrap"><canvas id="evSB" role="img" aria-label="Scatter chart of exit velocity vs wOBA for Cal Lutheran softball players"></canvas></div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+  <div class="section-title" style="margin-bottom:.75rem">Hard-Hit Rate Profile</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="legend"><span><span class="legend-dot" style="background:#7B5EA7"></span>Baseball</span></div>
+      <div id="hhBB"></div>
+    </div>
+    <div class="card">
+      <div class="legend"><span><span class="legend-dot" style="background:#2dc4a2"></span>Softball</span></div>
+      <div id="hhSB"></div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+  <div class="section-title" style="margin-bottom:.75rem">Full Hitting Table</div>
+  <div class="card">
+    <div style="display:flex;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap">
+      <button onclick="filterHit('all')" id="f-all" style="background:#3B2360;color:#fff;border:none;padding:.3rem .85rem;border-radius:20px;font-size:.75rem;cursor:pointer">All</button>
+      <button onclick="filterHit('Baseball')" id="f-bb" style="background:#1a1030;color:#9a8ab8;border:1px solid #2a1f45;padding:.3rem .85rem;border-radius:20px;font-size:.75rem;cursor:pointer">Baseball</button>
+      <button onclick="filterHit('Softball')" id="f-sb" style="background:#1a1030;color:#9a8ab8;border:1px solid #2a1f45;padding:.3rem .85rem;font-size:.75rem;border-radius:20px;cursor:pointer">Softball</button>
+    </div>
+    <div class="table-wrap"><table id="hitTable">
+      <thead><tr><th>Player</th><th>Sport</th><th>BA</th><th>OBP</th><th>SLG</th><th>OPS</th><th>wOBA</th><th>ISO</th><th>HH%</th><th>Brl%</th><th>Avg EV</th><th>Sprint</th></tr></thead>
+      <tbody id="hitBody"></tbody>
+    </table></div>
+    <div class="note">wOBA computed with DIII run-value weights. HH% = hard-hit rate. Brl% = barrel rate. Sprint = ft/s.</div>
+  </div>
+</div>
+
+<div id="pitching" class="section">
+  <div class="section-title">Pitching Biomechanics — Spring 2026</div>
+  <div class="grid3" style="margin-bottom:1rem">
+    <div class="card"><h3>Ace ERA</h3><div class="stat-big">2.25</div><div class="stat-sub">Chris Navarro · RP</div></div>
+    <div class="card"><h3>Top Spin Rate — BB</h3><div class="stat-big">2,389<span style="font-size:.9rem;color:#9a8ab8"> rpm</span></div><div class="stat-sub">Eric Sandoval</div></div>
+    <div class="card"><h3>Steinkamp IP</h3><div class="stat-big">102.1</div><div class="stat-sub">Softball innings leader</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="color:#C8A951;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem">⚾ Velocity vs Spin Rate</h3>
+      <div class="chart-wrap"><canvas id="spinBB" role="img" aria-label="Scatter of fastball velocity vs spin rate for baseball pitchers"></canvas></div>
+    </div>
+    <div class="card">
+      <h3 style="color:#2dc4a2;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem">🥎 Velocity vs Spin Rate</h3>
+      <div class="chart-wrap"><canvas id="spinSB" role="img" aria-label="Scatter of pitch velocity vs spin rate for softball pitchers"></canvas></div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="font-size:.78rem;color:#C8A951;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem">ERA vs FIP Gap</h3>
+      <div class="chart-wrap-tall"><canvas id="eraFip" role="img" aria-label="Bar chart comparing ERA and FIP for all pitchers"></canvas></div>
+      <div class="note">FIP = Fielding Independent Pitching. Positive gap = outperforming peripherals.</div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:.78rem;color:#C8A951;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem">Arm Slot vs Ground Ball %</h3>
+      <div class="chart-wrap"><canvas id="armSlot" role="img" aria-label="Scatter of arm slot angle vs ground ball percent for baseball pitchers"></canvas></div>
+      <div class="note">Lower arm slot (sidearm ~45-55°) vs overhand (~30-35°). Lower = higher GB%.</div>
+    </div>
+  </div>
+</div>
+
+<div id="monitoring" class="section">
+  <div class="section-title">Athlete Load Monitoring &amp; Recovery</div>
+  <div class="grid3" style="margin-bottom:1rem">
+    <div class="card"><h3>Highest Avg Load</h3><div class="stat-big">886<span style="font-size:.9rem;color:#9a8ab8"> AU</span></div><div class="stat-sub">Wyatt Crosby · per session</div></div>
+    <div class="card"><h3>HRV–Readiness r</h3><div class="stat-big">~0.80</div><div class="stat-sub">Strong positive correlation</div></div>
+    <div class="card"><h3>Avg Sleep (team)</h3><div class="stat-big">7.2<span style="font-size:.9rem;color:#9a8ab8"> hrs</span></div><div class="stat-sub">Baseball + Softball combined</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="font-size:.78rem;color:#C8A951;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem">HRV vs Readiness Score</h3>
+      <div class="chart-wrap"><canvas id="hrv" role="img" aria-label="Scatter chart of HRV RMSSD vs athlete readiness score"></canvas></div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:.78rem;color:#C8A951;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem">Training Load by Athlete</h3>
+      <div class="chart-wrap"><canvas id="loadChart" role="img" aria-label="Bar chart of total training load per athlete"></canvas></div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+  <div class="section-title" style="margin-bottom:.75rem">ACWR — Injury Risk Zones</div>
+  <div class="zone-safe"><strong>Safe zone</strong>&nbsp; ACWR 0.8 – 1.3 &nbsp;→&nbsp; optimal training stimulus</div>
+  <div class="zone-caution"><strong>Caution zone</strong>&nbsp; ACWR 1.3 – 1.5 &nbsp;→&nbsp; monitor closely; reduce if soreness elevated</div>
+  <div class="zone-danger"><strong>Danger zone</strong>&nbsp; ACWR &gt; 1.5 &nbsp;→&nbsp; elevated injury risk; load reduction protocol</div>
+  <div class="card" style="margin-top:.75rem">
+    <div class="chart-wrap-tall"><canvas id="acwr" role="img" aria-label="Line chart of acute chronic workload ratio over time per athlete"></canvas></div>
+    <div class="note">Acute:Chronic Workload Ratio (session-RPE method, Foster 1998). 7-day / 28-day rolling windows. Shaded regions show risk zones.</div>
+  </div>
+</div>
+
+<div id="clustering" class="section">
+  <div class="section-title">Player Archetype Clustering</div>
+  <p style="font-size:.83rem;color:#9a8ab8;margin-bottom:1rem">K-Means clustering (4 archetypes) applied to wOBA, ISO, hard-hit rate, barrel rate, exit velocity, and sprint speed. Plotted on first two principal components (PCA).</p>
+  <div class="card" style="margin-bottom:1rem">
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#7B5EA7"></span>Power Hitters</span>
+      <span><span class="legend-dot" style="background:#C8A951"></span>Contact Specialists</span>
+      <span><span class="legend-dot" style="background:#2dc4a2"></span>Speed / Athleticism</span>
+      <span><span class="legend-dot" style="background:#7a6a98"></span>Developing</span>
+    </div>
+    <div class="chart-wrap-tall"><canvas id="pca" role="img" aria-label="Scatter plot showing player archetypes via PCA clustering"></canvas></div>
+  </div>
+  <div class="section-title" style="margin-bottom:.75rem">Archetype Profiles</div>
+  <div class="grid2">
+    <div class="player-card">
+      <div class="name" style="color:#b89de8">⚡ Power Hitters</div>
+      <div class="pos">Marcus Reyes · Jona Dawson · Danielle Diaz</div>
+      <div style="font-size:.78rem;color:#9a8ab8">High wOBA (.380+), above-avg exit velo, barrel rate &gt;9%. Development focus: launch angle optimization.</div>
+    </div>
+    <div class="player-card">
+      <div class="name" style="color:#C8A951">🎯 Contact Specialists</div>
+      <div class="pos">Ethan Dungo · Reyna Perez · Paige Alvarez</div>
+      <div style="font-size:.78rem;color:#9a8ab8">High BA/OBP, low K%, consistent contact. Development focus: hard-hit rate & pull-side power.</div>
+    </div>
+    <div class="player-card">
+      <div class="name" style="color:#2dc4a2">⚡ Speed / Athleticism</div>
+      <div class="pos">Luis Herrera · Makayla Reveles · Emma Marks</div>
+      <div style="font-size:.78rem;color:#9a8ab8">Sprint speed &gt;26.5 ft/s, high SB attempts. Development focus: on-base skills & contact quality.</div>
+    </div>
+    <div class="player-card">
+      <div class="name" style="color:#7a6a98">📈 Developing</div>
+      <div class="pos">Sam Nguyen · Danny Ochoa · Cassie Burke</div>
+      <div style="font-size:.78rem;color:#9a8ab8">Limited PA / early career. Development focus: plate discipline, exit velocity development program.</div>
+    </div>
+  </div>
+</div>
+
+<div id="about" class="section">
+  <div class="section-title">About This Project</div>
+  <div class="card" style="max-width:680px">
+    <p style="font-size:.88rem;color:#d0c8e8;line-height:1.7;margin-bottom:1rem">This performance science analysis integrates physical, physiological, and biomechanical datasets from the Cal Lutheran Kingsmen (Baseball) and Regals (Softball) Spring 2026 seasons. It demonstrates applied sports analytics methodology aligned with professional performance science workflows.</p>
+    <div class="hr"></div>
+    <table style="font-size:.8rem;width:100%">
+      <tr><td style="color:#9a8ab8;padding:.4rem 0;width:40%">Physical datasets</td><td style="color:#d0c8e8">Exit velocity, sprint speed, barrel rate (Trackman/HitTrax analogs)</td></tr>
+      <tr><td style="color:#9a8ab8;padding:.4rem 0">Biomechanical data</td><td style="color:#d0c8e8">Spin rate, arm slot, pitch movement profiles (Trackman/Kinetrax analogs)</td></tr>
+      <tr><td style="color:#9a8ab8;padding:.4rem 0">Physiological monitoring</td><td style="color:#d0c8e8">HRV RMSSD, session RPE, sleep tracking, ACWR (WHOOP/Polar analogs)</td></tr>
+      <tr><td style="color:#9a8ab8;padding:.4rem 0">Methods</td><td style="color:#d0c8e8">wOBA, FIP, BABIP, K-Means clustering, PCA, ACWR (Foster 1998)</td></tr>
+      <tr><td style="color:#9a8ab8;padding:.4rem 0">Players</td><td style="color:#d0c8e8">Real 2026 CLU roster names (clusports.com)</td></tr>
+      <tr><td style="color:#9a8ab8;padding:.4rem 0">Physical metrics</td><td style="color:#d0c8e8">Simulated at realistic NCAA DIII benchmarks</td></tr>
+    </table>
+    <div class="hr"></div>
+    <p style="font-size:.78rem;color:#7a6a98;font-style:italic">References: Foster (1998) session-RPE; Gabbett (2016) ACWR; Tango, Lichtman &amp; Dolphin (2006) wOBA.</p>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const bbHit=[
+  {player:'Marcus Reyes',sport:'Baseball',pos:'INF',avg:.313,obp:.390,slg:.523,ops:.913,woba:.396,iso:.210,hh:44.8,brl:11.7,ev:88.0,sprint:26.4,cluster:0},
+  {player:'Jona Dawson',sport:'Baseball',pos:'INF',avg:.322,obp:.411,slg:.479,ops:.890,woba:.392,iso:.157,hh:38.6,brl:9.2,ev:84.9,sprint:26.8,cluster:0},
+  {player:'Jacob Blickenderfer',sport:'Baseball',pos:'OF',avg:.315,obp:.378,slg:.481,ops:.859,woba:.373,iso:.166,hh:40.3,brl:8.8,ev:85.6,sprint:27.2,cluster:1},
+  {player:'Nick Fernandez',sport:'Baseball',pos:'INF',avg:.295,obp:.376,slg:.475,ops:.851,woba:.369,iso:.180,hh:39.7,brl:9.6,ev:85.2,sprint:26.0,cluster:0},
+  {player:'Ethan Dungo',sport:'Baseball',pos:'OF',avg:.322,obp:.397,slg:.441,ops:.838,woba:.367,iso:.119,hh:41.2,brl:8.5,ev:86.3,sprint:27.4,cluster:1},
+  {player:'Wyatt Crosby',sport:'Baseball',pos:'OF',avg:.301,obp:.362,slg:.472,ops:.834,woba:.364,iso:.171,hh:43.1,brl:10.3,ev:87.1,sprint:26.1,cluster:0},
+  {player:'Aidan Buntich',sport:'Baseball',pos:'RHP/INF',avg:.275,obp:.355,slg:.413,ops:.768,woba:.351,iso:.138,hh:34.7,brl:6.1,ev:82.4,sprint:25.9,cluster:3},
+  {player:'Trevor Banks',sport:'Baseball',pos:'INF',avg:.287,obp:.367,slg:.400,ops:.767,woba:.345,iso:.113,hh:33.2,brl:5.9,ev:81.7,sprint:25.7,cluster:3},
+  {player:'Jake Morrison',sport:'Baseball',pos:'OF',avg:.279,obp:.352,slg:.423,ops:.775,woba:.342,iso:.144,hh:37.8,brl:8.1,ev:84.0,sprint:25.8,cluster:3},
+  {player:'Ryan Castillo',sport:'Baseball',pos:'OF',avg:.278,obp:.358,slg:.403,ops:.761,woba:.339,iso:.125,hh:36.1,brl:7.4,ev:83.5,sprint:27.0,cluster:2},
+  {player:'Luis Herrera',sport:'Baseball',pos:'INF',avg:.274,obp:.363,slg:.368,ops:.731,woba:.336,iso:.094,hh:31.5,brl:4.8,ev:80.4,sprint:27.8,cluster:2},
+  {player:'Cole Summers',sport:'Baseball',pos:'C',avg:.273,obp:.352,slg:.400,ops:.752,woba:.334,iso:.127,hh:29.4,brl:5.2,ev:79.2,sprint:24.3,cluster:3},
+  {player:'Brandon Pierce',sport:'Baseball',pos:'C/INF',avg:.262,obp:.344,slg:.393,ops:.737,woba:.333,iso:.131,hh:28.5,brl:4.7,ev:78.3,sprint:24.6,cluster:3},
+  {player:'Danny Ochoa',sport:'Baseball',pos:'C',avg:.273,obp:.353,slg:.352,ops:.705,woba:.322,iso:.079,hh:27.1,brl:4.3,ev:77.8,sprint:24.1,cluster:3},
+  {player:'Sam Nguyen',sport:'Baseball',pos:'INF',avg:.276,obp:.354,slg:.328,ops:.682,woba:.311,iso:.052,hh:28.9,brl:3.4,ev:79.9,sprint:26.5,cluster:3},
+];
+const sbHit=[
+  {player:'Reyna Perez',sport:'Softball',pos:'OF/INF',avg:.388,obp:.457,slg:.561,ops:1.018,woba:.440,iso:.173,hh:38.2,brl:9.1,ev:74.6,sprint:25.9,cluster:1},
+  {player:'Danielle Diaz',sport:'Softball',pos:'INF',avg:.315,obp:.394,slg:.500,ops:.894,woba:.392,iso:.185,hh:40.3,brl:10.4,ev:75.9,sprint:24.7,cluster:0},
+  {player:'Paige Alvarez',sport:'Softball',pos:'INF',avg:.316,obp:.400,slg:.474,ops:.874,woba:.386,iso:.158,hh:37.6,brl:8.4,ev:74.0,sprint:25.1,cluster:1},
+  {player:'Makayla Reveles',sport:'Softball',pos:'OF',avg:.307,obp:.386,slg:.432,ops:.818,woba:.366,iso:.125,hh:33.6,brl:6.3,ev:71.2,sprint:26.1,cluster:2},
+  {player:'Taylor Nguyen',sport:'Softball',pos:'INF',avg:.297,obp:.375,slg:.407,ops:.782,woba:.348,iso:.110,hh:35.4,brl:7.1,ev:73.1,sprint:24.9,cluster:1},
+  {player:'Shelby Swerdloff',sport:'Softball',pos:'C',avg:.259,obp:.344,slg:.376,ops:.720,woba:.323,iso:.117,hh:34.7,brl:6.8,ev:72.8,sprint:23.4,cluster:3},
+  {player:'Emma Marks',sport:'Softball',pos:'OF',avg:.275,obp:.359,slg:.338,ops:.697,woba:.319,iso:.063,hh:30.1,brl:4.2,ev:69.5,sprint:26.8,cluster:2},
+  {player:'Brianna Leech',sport:'Softball',pos:'INF',avg:.276,obp:.364,slg:.316,ops:.680,woba:.316,iso:.040,hh:31.2,brl:3.9,ev:70.4,sprint:25.4,cluster:3},
+  {player:'Cassie Burke',sport:'Softball',pos:'C/OF',avg:.266,obp:.347,slg:.344,ops:.691,woba:.310,iso:.078,hh:32.8,brl:5.1,ev:71.0,sprint:23.8,cluster:3},
+  {player:'Morgan Chen',sport:'Softball',pos:'OF',avg:.264,obp:.341,slg:.333,ops:.674,woba:.304,iso:.069,hh:30.8,brl:4.0,ev:69.9,sprint:25.7,cluster:3},
+];
+const bbPit=[
+  {name:'Chris Navarro',era:2.25,fip:2.71,k9:11.25,whip:1.11,ip:28,velo:88.9,spin:2302},
+  {name:'Connor Walsh',era:2.86,fip:3.08,k9:9.37,whip:1.18,ip:78.2,velo:90.1,spin:2318},
+  {name:'Aidan Buntich',era:3.03,fip:3.21,k9:9.68,whip:1.17,ip:62.1,velo:89.4,spin:2241},
+  {name:'Dylan Park',era:3.29,fip:3.31,k9:9.35,whip:1.27,ip:52,velo:88.7,spin:2276},
+  {name:'Eric Sandoval',era:3.38,fip:3.28,k9:9.35,whip:1.27,ip:34.2,velo:91.2,spin:2389},
+  {name:'Matt Torres',era:3.58,fip:3.74,k9:9.08,whip:1.31,ip:70.1,velo:84.6,spin:2187},
+  {name:'Jake Lim',era:3.99,fip:4.12,k9:9.15,whip:1.46,ip:38.1,velo:83.1,spin:2154},
+];
+const sbPit=[
+  {name:'Joie Steinkamp',era:2.81,fip:2.97,k7:6.18,whip:1.14,ip:102.1,velo:63.4,spin:1892},
+  {name:'Sophie Martinez',era:4.18,fip:4.32,k7:6.00,whip:1.54,ip:28,velo:61.2,spin:1836},
+  {name:'Kalli Strahm',era:4.71,fip:4.88,k7:5.22,whip:1.51,ip:72.2,velo:60.7,spin:1814},
+  {name:'Ally Forberg',era:4.76,fip:4.74,k7:5.22,whip:1.46,ip:64.1,velo:58.9,spin:1778},
+];
+const monitor=[
+  {player:'Ethan Dungo',sport:'Baseball',hrv:56.38,readiness:6.3,sleep:7.08,load:836,rpe:6.5},
+  {player:'Jona Dawson',sport:'Baseball',hrv:59.92,readiness:6.7,sleep:7.13,load:790,rpe:6.2},
+  {player:'Wyatt Crosby',sport:'Baseball',hrv:54.07,readiness:5.8,sleep:6.77,load:886,rpe:7.2},
+  {player:'Marcus Reyes',sport:'Baseball',hrv:56.70,readiness:6.3,sleep:7.17,load:852,rpe:6.7},
+  {player:'Reyna Perez',sport:'Softball',hrv:59.23,readiness:6.8,sleep:7.30,load:722,rpe:6.3},
+  {player:'Danielle Diaz',sport:'Softball',hrv:58.00,readiness:6.4,sleep:7.10,load:722,rpe:6.3},
+  {player:'Joie Steinkamp',sport:'Softball',hrv:61.12,readiness:7.1,sleep:7.28,load:652,rpe:6.0},
+  {player:'Makayla Reveles',sport:'Softball',hrv:60.07,readiness:6.9,sleep:7.23,load:692,rpe:6.0},
+];
+const allHit=[...bbHit,...sbHit];
+let hitFilter='all';
+function filterHit(f){
+  hitFilter=f;
+  ['all','bb','sb'].forEach(id=>document.getElementById('f-'+id).style.background='#1a1030');
+  ['all','bb','sb'].forEach(id=>document.getElementById('f-'+id).style.color='#9a8ab8');
+  document.getElementById('f-'+f).style.background='#3B2360';
+  document.getElementById('f-'+f).style.color='#fff';
+  renderHitTable();
+}
+function renderHitTable(){
+  const data=hitFilter==='all'?allHit:hitFilter==='Baseball'?bbHit:sbHit;
+  const sorted=[...data].sort((a,b)=>b.woba-a.woba);
+  document.getElementById('hitBody').innerHTML=sorted.map(r=>`<tr>
+    <td style="font-weight:500">${r.player}</td>
+    <td><span class="tag ${r.sport==='Baseball'?'tag-bb':'tag-sb'}">${r.sport==='Baseball'?'⚾':'🥎'}</span></td>
+    <td>${r.avg.toFixed(3)}</td><td>${r.obp.toFixed(3)}</td><td>${r.slg.toFixed(3)}</td><td>${r.ops.toFixed(3)}</td>
+    <td style="color:#C8A951;font-weight:600">${r.woba.toFixed(3)}</td>
+    <td>${r.iso.toFixed(3)}</td><td>${r.hh.toFixed(1)}%</td><td>${r.brl.toFixed(1)}%</td>
+    <td>${r.ev.toFixed(1)}</td><td>${r.sprint.toFixed(1)}</td>
+  </tr>`).join('');
+}
+renderHitTable();
+
+function renderBars(elId,data,key,max,color){
+  const el=document.getElementById(elId);
+  el.innerHTML=[...data].sort((a,b)=>b[key]-a[key]).map(r=>`
+    <div class="bar-wrap">
+      <div class="bar-label"><span>${r.player.split(' ').slice(-1)[0]}</span><span>${r[key].toFixed(1)}%</span></div>
+      <div class="bar-bg"><div class="bar-fill ${color}" style="width:${(r[key]/max*100).toFixed(1)}%"></div></div>
+    </div>`).join('');
+}
+renderBars('hhBB',bbHit,'hh',50,'bar-purple');
+renderBars('hhSB',sbHit,'hh',50,'bar-teal');
+
+function show(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const defaults={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{bodyFont:{size:11},titleFont:{size:11}}}};
+
+new Chart(document.getElementById('evBB'),{type:'scatter',data:{datasets:[{
+  data:bbHit.map(r=>({x:r.ev,y:r.woba,label:r.player.split(' ').slice(-1)[0]})),
+  backgroundColor:'rgba(123,94,167,0.75)',borderColor:'#9a6ec4',pointRadius:6,pointHoverRadius:8
+}]},options:{...defaults,scales:{x:{title:{display:true,text:'Avg Exit Velocity (mph)',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}},y:{title:{display:true,text:'wOBA',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}}},plugins:{...defaults.plugins,tooltip:{callbacks:{label:d=>`${d.raw.label}: EV ${d.raw.x}, wOBA ${d.raw.y.toFixed(3)}`}}}}});
+
+new Chart(document.getElementById('evSB'),{type:'scatter',data:{datasets:[{
+  data:sbHit.map(r=>({x:r.ev,y:r.woba,label:r.player.split(' ').slice(-1)[0]})),
+  backgroundColor:'rgba(45,196,162,0.75)',borderColor:'#2dc4a2',pointRadius:6,pointHoverRadius:8
+}]},options:{...defaults,scales:{x:{title:{display:true,text:'Avg Exit Velocity (mph)',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}},y:{title:{display:true,text:'wOBA',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}}},plugins:{...defaults.plugins,tooltip:{callbacks:{label:d=>`${d.raw.label}: EV ${d.raw.x}, wOBA ${d.raw.y.toFixed(3)}`}}}}});
+
+new Chart(document.getElementById('spinBB'),{type:'scatter',data:{datasets:[{
+  data:bbPit.map(r=>({x:r.velo,y:r.spin,label:r.name.split(' ').slice(-1)[0]})),
+  backgroundColor:'rgba(200,169,81,0.8)',borderColor:'#C8A951',pointRadius:7,pointHoverRadius:9
+}]},options:{...defaults,scales:{x:{title:{display:true,text:'Avg Fastball (mph)',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}},y:{title:{display:true,text:'Spin Rate (rpm)',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}}},plugins:{...defaults.plugins,tooltip:{callbacks:{label:d=>`${d.raw.label}: ${d.raw.x}mph / ${d.raw.y}rpm`}}}}});
+
+new Chart(document.getElementById('spinSB'),{type:'scatter',data:{datasets:[{
+  data:sbPit.map(r=>({x:r.velo,y:r.spin,label:r.name.split(' ').slice(-1)[0]})),
+  backgroundColor:'rgba(45,196,162,0.8)',borderColor:'#2dc4a2',pointRadius:8,pointHoverRadius:10
+}]},options:{...defaults,scales:{x:{title:{display:true,text:'Avg Velocity (mph)',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}},y:{title:{display:true,text:'Spin Rate (rpm)',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}}},plugins:{...defaults.plugins,tooltip:{callbacks:{label:d=>`${d.raw.label}: ${d.raw.x}mph / ${d.raw.y}rpm`}}}}});
+
+const allPit=[...bbPit.map(p=>({...p,sport:'BB'})),...sbPit.map(p=>({...p,sport:'SB'}))];
+new Chart(document.getElementById('eraFip'),{type:'bar',data:{
+  labels:allPit.map(p=>p.name.split(' ').slice(-1)[0]),
+  datasets:[
+    {label:'ERA',data:allPit.map(p=>p.era),backgroundColor:'rgba(123,94,167,0.8)',borderColor:'#7B5EA7',borderWidth:1,borderRadius:4},
+    {label:'FIP',data:allPit.map(p=>p.fip),backgroundColor:'rgba(200,169,81,0.8)',borderColor:'#C8A951',borderWidth:1,borderRadius:4}
+  ]
+},options:{...defaults,plugins:{legend:{display:true,labels:{color:'#9a8ab8',boxWidth:12,font:{size:11}}},tooltip:{mode:'index'}},scales:{x:{ticks:{color:'#9a8ab8',font:{size:10}},grid:{color:'#1f1535'}},y:{title:{display:true,text:'Run Average',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}}}}});
+
+new Chart(document.getElementById('armSlot'),{type:'scatter',data:{datasets:[{
+  data:bbPit.map(r=>({x:r.name==='Chris Navarro'?34:r.name==='Connor Walsh'?33:r.name==='Aidan Buntich'?35:r.name==='Dylan Park'?36:r.name==='Eric Sandoval'?31:r.name==='Matt Torres'?52:55,y:r.name==='Chris Navarro'?50.4:r.name==='Connor Walsh'?51.3:r.name==='Aidan Buntich'?48.2:r.name==='Dylan Park'?49.1:r.name==='Eric Sandoval'?52.7:r.name==='Matt Torres'?45.6:43.2,label:r.name.split(' ').slice(-1)[0]})),
+  backgroundColor:'rgba(200,169,81,0.8)',borderColor:'#C8A951',pointRadius:7
+}]},options:{...defaults,scales:{x:{title:{display:true,text:'Arm Slot (degrees)',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}},y:{title:{display:true,text:'Ground Ball %',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}}},plugins:{...defaults.plugins,tooltip:{callbacks:{label:d=>`${d.raw.label}: ${d.raw.x}° / GB% ${d.raw.y}`}}}}});
+
+new Chart(document.getElementById('hrv'),{type:'scatter',data:{datasets:[
+  {label:'Baseball',data:monitor.filter(r=>r.sport==='Baseball').map(r=>({x:r.hrv,y:r.readiness,label:r.player.split(' ')[0]})),backgroundColor:'rgba(123,94,167,0.8)',borderColor:'#7B5EA7',pointRadius:7},
+  {label:'Softball',data:monitor.filter(r=>r.sport==='Softball').map(r=>({x:r.hrv,y:r.readiness,label:r.player.split(' ')[0]})),backgroundColor:'rgba(45,196,162,0.8)',borderColor:'#2dc4a2',pointRadius:7}
+]},options:{...defaults,plugins:{legend:{display:true,labels:{color:'#9a8ab8',boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:d=>`${d.raw.label}: HRV ${d.raw.x.toFixed(1)}, Readiness ${d.raw.y.toFixed(1)}`}}},scales:{x:{title:{display:true,text:'HRV RMSSD (ms)',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}},y:{title:{display:true,text:'Readiness (1–10)',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}}}}});
+
+new Chart(document.getElementById('loadChart'),{type:'bar',data:{
+  labels:monitor.map(r=>r.player.split(' ').slice(-1)[0]),
+  datasets:[{label:'Total Load (AU)',data:monitor.map(r=>r.load),backgroundColor:monitor.map(r=>r.sport==='Baseball'?'rgba(123,94,167,0.85)':'rgba(45,196,162,0.85)'),borderRadius:5}]
+},options:{...defaults,scales:{x:{ticks:{color:'#9a8ab8',font:{size:10}},grid:{color:'#1f1535'}},y:{title:{display:true,text:'Avg Session Load (AU)',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}}}}});
+
+const acwrDates=['Feb 1','Feb 3','Feb 5','Feb 8','Feb 10','Feb 12'];
+const acwrData={
+  'Dungo':[0.85,1.12,0.92,1.05,1.28,1.01],
+  'Crosby':[0.90,1.31,1.05,1.08,1.48,1.12],
+  'Perez':[0.82,1.10,0.88,1.02,1.25,0.97],
+  'Steinkamp':[0.78,1.05,0.84,0.96,1.18,0.90],
+};
+new Chart(document.getElementById('acwr'),{type:'line',data:{
+  labels:acwrDates,
+  datasets:Object.entries(acwrData).map(([name,vals],i)=>({
+    label:name,data:vals,
+    borderColor:['#7B5EA7','#C8A951','#2dc4a2','#eb5757'][i],
+    backgroundColor:'transparent',
+    tension:.35,pointRadius:4,borderWidth:2,pointHoverRadius:6
+  }))
+},options:{...defaults,plugins:{legend:{display:true,labels:{color:'#9a8ab8',boxWidth:12,font:{size:11}}}},scales:{x:{ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}},y:{min:0.6,max:1.7,title:{display:true,text:'ACWR',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'},afterDraw(axis){const ctx=axis.chart.ctx,{top,bottom,left,right}=axis.chart.chartArea;const y13=axis.getPixelForValue(1.3),y15=axis.getPixelForValue(1.5),y08=axis.getPixelForValue(0.8);ctx.save();ctx.fillStyle='rgba(111,207,151,0.08)';ctx.fillRect(left,y13,right-left,y08-y13);ctx.fillStyle='rgba(242,201,76,0.1)';ctx.fillRect(left,y15,right-left,y13-y15);ctx.fillStyle='rgba(235,87,87,0.1)';ctx.fillRect(left,top,right-left,y15-top);ctx.restore();}}}}});
+
+const pcaData=[
+  {x:-1.8,y:0.9,label:'Reyes',c:0},{x:-1.5,y:0.5,label:'Dawson',c:0},{x:-0.9,y:0.8,label:'Diaz',c:0},
+  {x:-0.7,y:-0.4,label:'Dungo',c:1},{x:-0.5,y:-0.1,label:'Perez',c:1},{x:-0.4,y:-0.5,label:'Alvarez',c:1},{x:-0.6,y:-0.3,label:'Blick.',c:1},
+  {x:0.8,y:0.9,label:'Herrera',c:2},{x:0.9,y:0.5,label:'Reveles',c:2},{x:1.1,y:0.3,label:'Marks',c:2},{x:0.7,y:0.6,label:'Castillo',c:2},
+  {x:1.2,y:-0.8,label:'Ochoa',c:3},{x:1.4,y:-0.5,label:'Nguyen',c:3},{x:1.1,y:-1.1,label:'Burke',c:3},{x:1.3,y:-0.9,label:'Pierce',c:3},
+];
+const cColors=['rgba(123,94,167,0.8)','rgba(200,169,81,0.8)','rgba(45,196,162,0.8)','rgba(122,106,152,0.6)'];
+const cBorder=['#7B5EA7','#C8A951','#2dc4a2','#7a6a98'];
+const pcaSets=[0,1,2,3].map(c=>({
+  label:['Power Hitters','Contact Specialists','Speed/Athleticism','Developing'][c],
+  data:pcaData.filter(d=>d.c===c).map(d=>({x:d.x,y:d.y,label:d.label})),
+  backgroundColor:cColors[c],borderColor:cBorder[c],pointRadius:7,pointHoverRadius:9
+}));
+new Chart(document.getElementById('pca'),{type:'scatter',data:{datasets:pcaSets},options:{...defaults,plugins:{legend:{display:true,labels:{color:'#9a8ab8',boxWidth:12,font:{size:11}}},tooltip:{callbacks:{label:d=>`${d.raw.label} (${d.dataset.label})`}}},scales:{x:{title:{display:true,text:'PC1 — Power/Contact dimension',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}},y:{title:{display:true,text:'PC2 — Speed/Athleticism dimension',color:'#9a8ab8',font:{size:11}},ticks:{color:'#9a8ab8'},grid:{color:'#1f1535'}}}}});
+</script>
+</body>
+</html>
